@@ -13,17 +13,46 @@ Text formattedH2Text(String text){
     );
   }
 
-   MaterialButton formattedButton(String text){
-    return MaterialButton(
-      onPressed: () {},
-      focusColor: const Color.fromARGB(255, 25, 80, 125),
-      hoverColor: const Color.fromARGB(255, 36, 126, 199),
-      color: Colors.blue,
-      textColor: Colors.white,
-      height: double.maxFinite,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Text(text),
-    );
-  }
+MaterialButton formattedButton(String text){
+return MaterialButton(
+  onPressed: () {},
+  focusColor: const Color.fromARGB(255, 25, 80, 125),
+  hoverColor: const Color.fromARGB(255, 36, 126, 199),
+  color: Colors.blue,
+  textColor: Colors.white,
+  height: double.maxFinite,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(10),
+  ),
+  child: Text(text),
+);
+}
+
+Widget formattedContainer(String text, ColorScheme colorScheme){
+return Expanded( 
+  flex: 1,
+  
+  child: Container(
+  decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(5),
+    color: colorScheme.onPrimaryContainer,
+    border: Border.all(color: Colors.black, width: 2.0),
+    boxShadow: [BoxShadow(color: Colors.grey.withAlpha(2),
+      spreadRadius: 4.0,
+      blurRadius: 5.0,
+      offset: const Offset(1, 2)
+    
+    )],
+
+    gradient: LinearGradient(colors: [Colors.deepPurple, Colors.purple], 
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight
+    ),
+    
+  ),
+  width: double.maxFinite,
+  height: double.maxFinite,
+  margin: EdgeInsets.all(80),
+  child: Text(text, style: TextStyle(fontSize: 20, color: Colors.white),),));
+
+}

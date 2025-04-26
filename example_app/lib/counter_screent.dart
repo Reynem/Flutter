@@ -24,7 +24,7 @@ class _CounterScreenState extends State<CounterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = Theme.of(context); 
     final ColorScheme colorScheme = theme.colorScheme;
 
     final List<Widget> destinations = [
@@ -45,7 +45,7 @@ class _CounterScreenState extends State<CounterScreen> {
     return Scaffold(
         body: Container(
             alignment: Alignment.center,
-            child: formattedH2Text(counter.toString()),
+            child: formattedContainer(counter.toString(), colorScheme),
           ),
 
         floatingActionButton: FloatingActionButton(
@@ -66,3 +66,4 @@ class _CounterScreenState extends State<CounterScreen> {
     
   }
 }
+
