@@ -12,15 +12,6 @@ class CounterScreen extends StatefulWidget {
 }
 
 class _CounterScreenState extends State<CounterScreen> {
-  int counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      counter++;
-    });
-  }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -43,19 +34,26 @@ class _CounterScreenState extends State<CounterScreen> {
     ];
 
     return Scaffold(
-        body: Container(
-            alignment: Alignment.center,
-            child: formattedContainer(counter.toString(), colorScheme),
-          ),
+        body: Column(
+            children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                        Expanded(
+                          child: formattedContainer("First Container", colorScheme),),
 
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            _incrementCounter();
-          },
-          tooltip: "Like",
-          backgroundColor: Colors.blue,
-          foregroundColor: Colors.white,
-          child: const Icon(Icons.thumb_up),
+                        Expanded(
+                          child: formattedContainer("Second Container", colorScheme),
+                          )
+                      ],
+                  ),
+                  
+                  ),
+                  
+                Expanded(
+                  child: formattedContainer("Third Container", colorScheme)
+                )
+              ]
           ),
 
         backgroundColor: colorScheme.primary,

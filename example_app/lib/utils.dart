@@ -29,18 +29,16 @@ return MaterialButton(
 }
 
 Widget formattedContainer(String text, ColorScheme colorScheme){
-return Expanded( 
-  flex: 1,
-  
-  child: Container(
+return 
+  Container(
   decoration: BoxDecoration(
     borderRadius: BorderRadius.circular(5),
     color: colorScheme.onPrimaryContainer,
     border: Border.all(color: Colors.black, width: 2.0),
     boxShadow: [BoxShadow(color: Colors.grey.withAlpha(2),
-      spreadRadius: 4.0,
-      blurRadius: 5.0,
-      offset: const Offset(1, 2)
+      spreadRadius: 7.0,
+      blurRadius: 8.0,
+      offset: const Offset(0, 3)
     
     )],
 
@@ -50,9 +48,12 @@ return Expanded(
     ),
     
   ),
-  width: double.maxFinite,
-  height: double.maxFinite,
-  margin: EdgeInsets.all(80),
-  child: Text(text, style: TextStyle(fontSize: 20, color: Colors.white),),));
+    width: double.maxFinite,
+    height: double.maxFinite,
+    margin: EdgeInsets.all(80),
+    child: Text(text, style: TextStyle(fontSize: 20, color: Colors.white),
+  )
+  
+  );
 
 }
