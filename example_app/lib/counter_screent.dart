@@ -17,6 +17,8 @@ class _CounterScreenState extends State<CounterScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context); 
     final ColorScheme colorScheme = theme.colorScheme;
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
 
     final List<Widget> destinations = [
       Container(
@@ -39,8 +41,8 @@ class _CounterScreenState extends State<CounterScreen> {
                 Expanded(
                   child: Row(
                     children: <Widget>[
-                        Expanded(
-                          child: formattedContainer(imagePath: "anime_girl.png", colorScheme: colorScheme),),
+                        
+                          formattedImageContainer(imagePath: "anime_girl.png", colorScheme: colorScheme),
 
                         Expanded(
                           child: formattedContainer(text: "Second Container", colorScheme:  colorScheme),
