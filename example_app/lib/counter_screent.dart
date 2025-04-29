@@ -40,18 +40,18 @@ class _CounterScreenState extends State<CounterScreen> {
                   child: Row(
                     children: <Widget>[
                         Expanded(
-                          child: formattedContainer("First Container", colorScheme),),
+                          child: formattedContainer(imagePath: "anime_girl.png", colorScheme: colorScheme),),
 
                         Expanded(
-                          child: formattedContainer("Second Container", colorScheme),
+                          child: formattedContainer(text: "Second Container", colorScheme:  colorScheme),
                           )
                       ],
                   ),
                   
                   ),
-                  
+
                 Expanded(
-                  child: formattedContainer("Third Container", colorScheme)
+                  child: formattedContainer(text: "Third Container",colorScheme: colorScheme)
                 )
               ]
           ),

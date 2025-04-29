@@ -58,9 +58,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # Will change it later
-  # assets:
-  #   - assets/image.jpg
+  assets:
+    - assets/images/anime_girl.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
