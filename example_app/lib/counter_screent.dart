@@ -1,3 +1,5 @@
+
+import 'package:example_app/api.dart';
 import 'package:flutter/material.dart';
 import 'package:example_app/utils.dart';
 
@@ -12,6 +14,14 @@ class CounterScreen extends StatefulWidget {
 }
 
 class _CounterScreenState extends State<CounterScreen> {
+ late Future<GithubInfo> futureGithubInfo;
+
+  @override
+  void initState() {
+    futureGithubInfo = fetchGithubInfo('Reynem');
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -35,34 +45,73 @@ class _CounterScreenState extends State<CounterScreen> {
       ),
     ];
 
-    return Scaffold(
-        body: Column(
-            children: <Widget>[
-                Expanded(
-                  child: Row(
-                    children: <Widget>[
-                        
-                          formattedImageContainer(imagePath: "anime_girl.png", colorScheme: colorScheme),
+    if (queryData.size.width < 600.0){
+      return Scaffold(
+          body: Column(
+              children: <Widget>[
+                  Expanded(
+                      child: formattedImageContainer(imagePath: "anime_girl.png", colorScheme: colorScheme),
+                    ),
+                  Expanded(
+                    child: formattedContainer(text: "Third Container",colorScheme: colorScheme)
+                  )
+                ]
+            ),
 
-                        Expanded(
-                          child: formattedContainer(text: "Second Container", colorScheme:  colorScheme),
-                          )
-                      ],
-                  ),
-                  
-                  ),
-
-                Expanded(
-                  child: formattedContainer(text: "Third Container",colorScheme: colorScheme)
-                )
-              ]
-          ),
-
-        backgroundColor: colorScheme.primary,
+          backgroundColor: colorScheme.primary,
 
 
-        bottomNavigationBar: NavigationBar(destinations: destinations, backgroundColor: colorScheme.primaryContainer,),
-      );
+          bottomNavigationBar: NavigationBar(destinations: destinations, backgroundColor: colorScheme.primaryContainer,),
+        );
+
+    } else{
+
+      return Scaffold(
+          body: Column(
+              children: <Widget>[
+                  Expanded(
+                    child: Row(
+                      children: <Widget>[
+                          
+                            formattedImageContainer(imagePath: "anime_girl.png", colorScheme: colorScheme),
+
+                            Expanded(
+                              child: FutureBuilder<GithubInfo>(
+                                  future: futureGithubInfo,
+                                  builder: (context, snapshot) {
+                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                                          return Center(child: CircularProgressIndicator());
+                                      } else if (snapshot.hasError) {
+                                          return formattedContainer(text: "Ошибка загрузки: ${snapshot.error}", colorScheme: colorScheme);
+                                      } else if (snapshot.hasData) {
+                                          final githubInfo = snapshot.data!;
+                                          return formattedContainer(
+                                              text: "User: ${githubInfo.user}",
+                                              colorScheme: colorScheme
+                                          );
+                                      } else {
+                                          return formattedContainer(text: "Нет данных", colorScheme: colorScheme);
+                                      }
+                                  },
+                              ),
+                            ),
+                        ],
+                    ),
+                    
+                    ),
+
+                  Expanded(
+                    child: formattedContainer(text: "Third Container",colorScheme: colorScheme)
+                  )
+                ]
+            ),
+
+          backgroundColor: colorScheme.primary,
+
+
+          bottomNavigationBar: NavigationBar(destinations: destinations, backgroundColor: colorScheme.primaryContainer,),
+        );
+    }
     
   }
 }
