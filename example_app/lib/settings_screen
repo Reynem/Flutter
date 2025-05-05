@@ -1,0 +1,117 @@
+
+import 'package:flutter/material.dart';
+
+
+class SettingsScreen extends StatefulWidget {
+    const SettingsScreen({super.key});
+
+    @override
+    State<SettingsScreen> createState() => _SettingsScreenState();
+
+    
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+ late Future<GithubInfo> futureGithubInfo;
+ late Future<List<GithubRepoInfo>> futureGithubRepoInfo;
+
+  @override
+  void initState() {
+    futureGithubInfo = fetchGithubGeneralInfo('Reynem');
+    futureGithubRepoInfo = fetchGithubRepoInfo('Reynem');
+    super.initState();
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context); 
+    final ColorScheme colorScheme = theme.colorScheme;
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+
+    final List<Widget> destinations = [
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+        child: formattedButton("Home"),
+      ),
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+        child: formattedButton("Settings"),
+      ),
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+        child: formattedButton("Profile"),
+      ),
+    ];
+
+    if (queryData.size.width < 600.0){
+      return Scaffold(
+          body: Column(
+              children: <Widget>[
+                  Expanded(
+                      child: formattedImageContainer(imagePath: "anime_girl.png", colorScheme: colorScheme),
+                    ),
+                  Expanded(
+                    child: thirdContainer(futureGithubRepoInfo, colorScheme)
+                  )
+                ]
+            ),
+
+          backgroundColor: colorScheme.primary,
+
+
+          bottomNavigationBar: NavigationBar(destinations: destinations, backgroundColor: colorScheme.primaryContainer,),
+        );
+
+    } else{
+
+      return Scaffold(
+          body: Column(
+              children: <Widget>[
+                  Expanded(
+                    child: Row(
+                      children: <Widget>[
+                          
+                            formattedImageContainer(imagePath: "anime_girl.png", colorScheme: colorScheme),
+
+                            Expanded(
+                              child: FutureBuilder<GithubInfo>(
+                                  future: futureGithubInfo,
+                                  builder: (context, snapshot) {
+                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                                          return Center(child: CircularProgressIndicator());
+                                      } else if (snapshot.hasError) {
+                                          return formattedContainer(text: "Ошибка загрузки: ${snapshot.error}", colorScheme: colorScheme);
+                                      } else if (snapshot.hasData) {
+                                          final githubInfo = snapshot.data!;
+                                          return formattedContainer(
+                                              text: "User: ${githubInfo.user}",
+                                              colorScheme: colorScheme
+                                          );
+                                      } else {
+                                          return formattedContainer(text: "Нет данных", colorScheme: colorScheme);
+                                      }
+                                  },
+                              ),
+                            ),
+                        ],
+                    ),
+                    
+                    ),
+
+                  Expanded(
+                      child: thirdContainer(futureGithubRepoInfo, colorScheme)
+                    )
+                ]
+            ),
+
+          backgroundColor: colorScheme.primary,
+
+
+          bottomNavigationBar: NavigationBar(destinations: destinations, backgroundColor: colorScheme.primaryContainer,),
+        );
+    }
+    
+  }
+}
