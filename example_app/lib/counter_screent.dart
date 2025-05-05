@@ -35,17 +35,19 @@ class _CounterScreenState extends State<CounterScreen> {
     final List<Widget> destinations = [
       Container(
         margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-        child: formattedButton("Home"),
+        child: formattedButton("Home", context),
       ),
       Container(
         margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-        child: formattedButton("Settings"),
+        child: formattedButton("Settings", context),
       ),
       Container(
         margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-        child: formattedButton("Profile"),
+        child: formattedButton("Profile", context),
       ),
     ];
+
+    
 
     if (queryData.size.width < 600.0){
       return Scaffold(

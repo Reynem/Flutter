@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:example_app/settings_screen.dart'
+import 'package:example_app/settings_screen.dart';
 
-void main() => runApp(SettingsApp());
 
 class SettingsApp extends StatelessWidget {
   const SettingsApp({super.key});

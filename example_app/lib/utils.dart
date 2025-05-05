@@ -1,4 +1,5 @@
 import 'package:example_app/api.dart';
+import 'package:example_app/settings_screen.dart';
 import 'package:flutter/material.dart';
 
 const Color colorContainerOne = Color(0x90D5FFff);
@@ -16,9 +17,15 @@ Text formattedH2Text(String text){
     );
   }
 
-MaterialButton formattedButton(String text){
+MaterialButton formattedButton(String text, BuildContext context){
 return MaterialButton(
-  onPressed: () {},
+  onPressed: () {
+    if (text == "Settings"){
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsScreen()));
+    } else if (text == "Home"){
+      Navigator.of(context).popUntil((route) => route.isFirst);
+    }
+  },
   focusColor: const Color.fromARGB(255, 25, 80, 125),
   hoverColor: const Color.fromARGB(255, 36, 126, 199),
   color: Colors.blue,
@@ -129,6 +136,7 @@ Widget thirdContainer(Future<List<GithubRepoInfo>> futureGithubRepoInfo, ColorSc
                       ),
                   );
               },
+            cacheExtent: 1000,
           );
       } else {
           return formattedContainer(text: "Нет данных", colorScheme: colorScheme);
