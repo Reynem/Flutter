@@ -136,7 +136,7 @@ Widget thirdContainer(Future<List<GithubRepoInfo>> futureGithubRepoInfo, ColorSc
                       ),
                   );
               },
-            cacheExtent: 1000,
+            cacheExtent: 250,
           );
       } else {
           return formattedContainer(text: "Нет данных", colorScheme: colorScheme);

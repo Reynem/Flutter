@@ -17,6 +17,8 @@ class _CounterScreenState extends State<CounterScreen> {
  late Future<GithubInfo> futureGithubInfo;
  late Future<List<GithubRepoInfo>> futureGithubRepoInfo;
 
+ String githubUserName = "Reynem";
+
   @override
   void initState() {
     futureGithubInfo = fetchGithubGeneralInfo('Reynem');

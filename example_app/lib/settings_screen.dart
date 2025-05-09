@@ -14,9 +14,17 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
 
+  final TextEditingController githubName = TextEditingController();
+
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    githubName.dispose();
+    super.dispose();
   }
 
 
@@ -42,10 +50,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     
     return Scaffold(
-      body: formattedContainer(text: "Settings Page", colorScheme: colorScheme),
-      backgroundColor: colorScheme.primary,
+      body: Padding(
+        padding: EdgeInsets.all(10.0),
+        child: Center(
+          child: TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter a github username',
+                  fillColor: Colors.black,
+                  
+                ),
+                controller: githubName
+                
+              )
+              
+            ),
+          ),
+      backgroundColor: colorScheme.primaryContainer,
       bottomNavigationBar: NavigationBar(destinations: destinations, backgroundColor: colorScheme.primaryContainer,),
+            
     );
+      
 
   }
 }
