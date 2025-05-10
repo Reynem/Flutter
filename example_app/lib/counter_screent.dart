@@ -1,11 +1,13 @@
 
 import 'package:example_app/api.dart';
+import 'package:example_app/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:example_app/utils.dart';
 
 
 class CounterScreen extends StatefulWidget {
     const CounterScreen({super.key});
+    
 
     @override
     State<CounterScreen> createState() => _CounterScreenState();
@@ -17,14 +19,30 @@ class _CounterScreenState extends State<CounterScreen> {
  late Future<GithubInfo> futureGithubInfo;
  late Future<List<GithubRepoInfo>> futureGithubRepoInfo;
 
- String githubUserName = "Reynem";
+ String githubUserName = githubNameUser;
 
   @override
   void initState() {
-    futureGithubInfo = fetchGithubGeneralInfo('Reynem');
-    futureGithubRepoInfo = fetchGithubRepoInfo('Reynem');
+    futureGithubInfo = fetchGithubGeneralInfo(githubUserName);
+    futureGithubRepoInfo = fetchGithubRepoInfo(githubUserName);
     super.initState();
   }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (githubUserName != githubNameUser) {
+      refreshData();
+    }
+  }
+
+  void refreshData() {
+  setState(() {
+    githubUserName = githubNameUser;
+    futureGithubInfo = fetchGithubGeneralInfo(githubUserName);
+    futureGithubRepoInfo = fetchGithubRepoInfo(githubUserName);
+  });
+}
 
 
   @override
@@ -49,7 +67,6 @@ class _CounterScreenState extends State<CounterScreen> {
       ),
     ];
 
-    
 
     if (queryData.size.width < 600.0){
       return Scaffold(
@@ -60,7 +77,8 @@ class _CounterScreenState extends State<CounterScreen> {
                     ),
                   Expanded(
                     child: thirdContainer(futureGithubRepoInfo, colorScheme)
-                  )
+                  ),
+                  
                 ]
             ),
 

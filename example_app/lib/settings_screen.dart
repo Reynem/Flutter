@@ -1,7 +1,10 @@
+library;
 
 import 'package:example_app/utils.dart';
 import 'package:flutter/material.dart';
 
+
+String githubNameUser = "Reynem";
 
 class SettingsScreen extends StatefulWidget {
     const SettingsScreen({super.key});
@@ -13,19 +16,12 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-
-  final TextEditingController githubName = TextEditingController();
-
+  
   @override
   void initState() {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    githubName.dispose();
-    super.dispose();
-  }
 
 
   @override
@@ -47,7 +43,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: formattedButton("Profile", context),
       ),
     ];
-
+    
     
     return Scaffold(
       body: Padding(
@@ -60,7 +56,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   fillColor: Colors.black,
                   
                 ),
-                controller: githubName
+                onChanged: (value) {
+                  githubNameUser = value;
+                },
                 
               )
               
