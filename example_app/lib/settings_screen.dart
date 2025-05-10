@@ -4,7 +4,7 @@ import 'package:example_app/utils.dart';
 import 'package:flutter/material.dart';
 
 
-String githubNameUser = "Reynem";
+ValueNotifier<String> githubNameUser = ValueNotifier<String>("Reynem");
 
 class SettingsScreen extends StatefulWidget {
     const SettingsScreen({super.key});
@@ -57,7 +57,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   
                 ),
                 onChanged: (value) {
-                  githubNameUser = value;
+                  githubNameUser.value = value;
                 },
                 
               )

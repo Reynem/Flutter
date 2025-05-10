@@ -19,26 +19,37 @@ class _CounterScreenState extends State<CounterScreen> {
  late Future<GithubInfo> futureGithubInfo;
  late Future<List<GithubRepoInfo>> futureGithubRepoInfo;
 
- String githubUserName = githubNameUser;
+ String githubUserName = githubNameUser.value;
 
   @override
   void initState() {
-    futureGithubInfo = fetchGithubGeneralInfo(githubUserName);
-    futureGithubRepoInfo = fetchGithubRepoInfo(githubUserName);
     super.initState();
+    _loadData();
+    githubNameUser.addListener(refreshData);
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (githubUserName != githubNameUser) {
+    if (githubUserName != githubNameUser.value) {
       refreshData();
     }
   }
 
+  @override
+  void dispose() {
+    githubNameUser.removeListener(refreshData);
+    super.dispose();
+  }
+
+  void _loadData(){
+    futureGithubInfo = fetchGithubGeneralInfo(githubUserName);
+    futureGithubRepoInfo = fetchGithubRepoInfo(githubUserName);
+  }
+
   void refreshData() {
   setState(() {
-    githubUserName = githubNameUser;
+    githubUserName = githubNameUser.value;
     futureGithubInfo = fetchGithubGeneralInfo(githubUserName);
     futureGithubRepoInfo = fetchGithubRepoInfo(githubUserName);
   });
