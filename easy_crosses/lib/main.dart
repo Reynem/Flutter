@@ -28,10 +28,59 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  
+  List<String> buttonValues = List.filled(9, '');
+  List<List<int>> winCombinations = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  int xWin = 0;
+  int yWin = 0;
+
+  bool playerTurn = true;
 
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    final boxSize = (screenWidth < screenHeight ? screenWidth : screenHeight) * 0.9;
+
+    void doClearValues(){
+      buttonValues = List.filled(9, '');
+      return;
+    }
+
+    void doCheckDraw(){
+      for (String k in buttonValues){
+        if (k.isEmpty) return;
+      }
+      doClearValues();
+    }
+
+    String doCheckWin(){
+      for (var combo in winCombinations){
+        String a = buttonValues[combo[0]];
+        String b = buttonValues[combo[1]];
+        String c = buttonValues[combo[2]];
+        if (a == b && b == c && c == 'X'){
+          xWin++;
+          return "X win";
+        } else if (a == b && b == c && c == 'O'){
+          yWin++;
+          return 'O win';
+        }
+      }
+      return '';
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -39,23 +88,39 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: SizedBox( 
-          width: 800,
+          width: boxSize,
+          height: boxSize,
           child: GridView.count(
               crossAxisCount: 3,
+              
               children: List.generate(9, (index) {
-                return Container(
-                  color: Colors.blue,
-                  margin: const EdgeInsets.all(9),
-                  child: Center(
-                    child: Text(
-                      'Item $index',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
+                return Padding(
+                  padding: EdgeInsets.all(5),
+                  child: MaterialButton(
+                    onPressed: () {
+                        setState(() {
+                          if (buttonValues[index] == '' && playerTurn){
+                            buttonValues[index] = 'X';
+                            playerTurn = false;
+                          } else if (buttonValues[index] == '' && !playerTurn){
+                            buttonValues[index] = 'O';
+                            playerTurn = true;
+                          }
+                          doCheckDraw();
+                          doCheckWin();
+                        });
+                      },
+                      color: Colors.blueAccent,
+                      child: Text(
+                        buttonValues[index],
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                      )
+                    )
                 );
+                
               },
               )
             )
