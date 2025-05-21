@@ -51,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
-    final boxSize = (screenWidth < screenHeight ? screenWidth : screenHeight) * 0.9;
+    final boxSize = (screenWidth < screenHeight ? screenWidth : screenHeight) * 0.8;
 
     void doClearValues(){
       buttonValues = List.filled(9, '');
@@ -72,9 +72,11 @@ class _MyHomePageState extends State<MyHomePage> {
         String c = buttonValues[combo[2]];
         if (a == b && b == c && c == 'X'){
           xWin++;
+          doClearValues();
           return "X win";
         } else if (a == b && b == c && c == 'O'){
           yWin++;
+          doClearValues();
           return 'O win';
         }
       }
@@ -90,41 +92,56 @@ class _MyHomePageState extends State<MyHomePage> {
         child: SizedBox( 
           width: boxSize,
           height: boxSize,
-          child: GridView.count(
-              crossAxisCount: 3,
+          child: Column(
+            children: [
+              Text(
+                "$xWin:$yWin",
+                style: const TextStyle(
+                  color: Colors.black,
+                        fontSize: 30,
+                ),
+              ),
               
-              children: List.generate(9, (index) {
-                return Padding(
-                  padding: EdgeInsets.all(5),
-                  child: MaterialButton(
-                    onPressed: () {
-                        setState(() {
-                          if (buttonValues[index] == '' && playerTurn){
-                            buttonValues[index] = 'X';
-                            playerTurn = false;
-                          } else if (buttonValues[index] == '' && !playerTurn){
-                            buttonValues[index] = 'O';
-                            playerTurn = true;
-                          }
-                          doCheckDraw();
-                          doCheckWin();
-                        });
-                      },
-                      color: Colors.blueAccent,
-                      child: Text(
-                        buttonValues[index],
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                          ),
-                      )
-                    )
-                );
-                
-              },
+              Expanded(
+                child: GridView.count(
+                  crossAxisCount: 3,
+                  
+                  children: List.generate(9, (index) {
+                    return Padding(
+                      padding: EdgeInsets.all(5),
+                      child: MaterialButton(
+                        onPressed: () {
+                            setState(() {
+                              if (buttonValues[index] == '' && playerTurn){
+                                buttonValues[index] = 'X';
+                                playerTurn = false;
+                              } else if (buttonValues[index] == '' && !playerTurn){
+                                buttonValues[index] = 'O';
+                                playerTurn = true;
+                              }
+                              doCheckDraw();
+                              doCheckWin();
+                            });
+                          },
+                          color: Colors.blueAccent,
+                          child: Text(
+                            buttonValues[index],
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
+                          )
+                        )
+                    );
+                    
+                  },
+                  )
               )
             )
+            ]
           )
+          )
+          ,
       )
     );
   }
