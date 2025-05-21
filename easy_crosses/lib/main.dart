@@ -10,11 +10,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Crosses and zeros',
+      title: 'Tic tac toe',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Crosses and zeros'),
+      home: const MyHomePage(title: 'Tic tac toe'),
     );
   }
 }
@@ -91,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: SizedBox( 
           width: boxSize,
-          height: boxSize,
+          height: boxSize + 50,
           child: Column(
             children: [
               Text(
