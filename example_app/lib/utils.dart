@@ -2,22 +2,20 @@ import 'package:example_app/api.dart';
 import 'package:example_app/settings_screen.dart';
 import 'package:flutter/material.dart';
 
-const Color colorContainerOne = Color(0x90D5FFff);
-const Color colorContainerSecond = Color(0x57B9FFff);
 
-Text formattedH2Text(String text){
+Text formattedH2Text(String text, ColorScheme colorScheme){
     return Text(
       text,
       textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: 28,
-        color: Colors.black,
+        color: colorScheme.onSurface,
         fontWeight: FontWeight.bold,
       ),
     );
   }
 
-MaterialButton formattedButton(String text, BuildContext context){
+MaterialButton formattedButton(String text, BuildContext context, ColorScheme colorScheme){
 return MaterialButton(
   onPressed: () {
     if (text == "Settings"){
@@ -26,10 +24,10 @@ return MaterialButton(
       Navigator.of(context).popUntil((route) => route.isFirst);
     }
   },
-  focusColor: const Color.fromARGB(255, 25, 80, 125),
-  hoverColor: const Color.fromARGB(255, 36, 126, 199),
-  color: Colors.blue,
-  textColor: Colors.white,
+  focusColor: colorScheme.primary.withValues(alpha: 0.4),
+  hoverColor: colorScheme.primary.withValues(alpha: 0.2),
+  color: colorScheme.primary,
+  textColor: colorScheme.onPrimary,
   height: double.maxFinite,
   shape: RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(10),
@@ -43,24 +41,19 @@ Widget formattedContainer({required String text, required ColorScheme colorSchem
     Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        color: colorScheme.onPrimaryContainer,
-        border: Border.all(color: Colors.black, width: 0.5),
-        boxShadow: [BoxShadow(color: Colors.grey.withAlpha(2),
-          spreadRadius: 7.0,
-          blurRadius: 8.0,
-          offset: const Offset(0, 3)
-        
-        )],
-
-        gradient: LinearGradient(colors: [colorContainerOne, colorContainerSecond], 
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight
-        ),
-        
+        color: colorScheme.surfaceContainerHighest,
+        border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.5), width: 0.5),
       ),
         width: double.maxFinite,
         height: double.maxFinite,
-        child: Center(child: Text(text)),
+        child: Center(child: 
+          Text(
+            text,
+            style: TextStyle(
+              color: colorScheme.onSurface,
+            ),
+          )
+        ),
     
   
   );
@@ -73,20 +66,8 @@ Widget formattedImageContainer({required String imagePath, required ColorScheme 
     child: Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        color: colorScheme.onPrimaryContainer,
-        border: Border.all(color: Colors.black, width: 0.5),
-        boxShadow: [BoxShadow(color: Colors.grey.withAlpha(2),
-          spreadRadius: 7.0,
-          blurRadius: 8.0,
-          offset: const Offset(0, 3)
-        
-        )],
-
-        gradient: LinearGradient(colors: [colorContainerOne, colorContainerSecond], 
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight
-        ),
-        
+        color: colorScheme.surfaceContainerHighest,
+        border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.5), width: 0.5),
       ),
         child: Center(child: Image.asset("assets/images/$imagePath")),
     ));
@@ -119,17 +100,28 @@ Widget thirdContainer(Future<List<GithubRepoInfo>> futureGithubRepoInfo, ColorSc
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16,
+                                          color: colorScheme.onSurface,
                                       ),
                                   ),
                                   if (repo.description != null && repo.description!.isNotEmpty)
                                       Padding(
                                           padding: const EdgeInsets.only(top: 4.0),
-                                          child: Text(repo.description!),
+                                          child: Text(
+                                            repo.description!,
+                                            style: TextStyle(
+                                              color: colorScheme.onSurfaceVariant,
+                                            ),
+                                          ),
                                       ),
                                   if (repo.language != null && repo.language!.isNotEmpty)
                                       Padding(
                                             padding: const EdgeInsets.only(top: 4.0),
-                                            child: Text("Language: ${repo.language!}"),
+                                            child: Text(
+                                              "Language: ${repo.language!}",
+                                              style: TextStyle(
+                                                color: colorScheme.onSurfaceVariant,
+                                              ),
+                                            ),
                                       ),
                               ],
                           ),

@@ -66,15 +66,15 @@ class _CounterScreenState extends State<CounterScreen> {
     final List<Widget> destinations = [
       Container(
         margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-        child: formattedButton("Home", context),
+        child: formattedButton("Home", context, colorScheme),
       ),
       Container(
         margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-        child: formattedButton("Settings", context),
+        child: formattedButton("Settings", context, colorScheme),
       ),
       Container(
         margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-        child: formattedButton("Profile", context),
+        child: formattedButton("Profile", context, colorScheme),
       ),
     ];
 
